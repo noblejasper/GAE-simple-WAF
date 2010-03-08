@@ -18,16 +18,3 @@ class index(CBase):
             auth_url_linktext=auth_url_linktext
         )
         template.render()
-
-class guestbook(CBase):
-    def post(self):
-        topic = self.M.Topics()
-
-        if self.users.get_current_user():
-            topic.user = self.users.get_current_user()
-
-        topic.title = self.request.get('title')
-        topic.body  = self.request.get('body')
-        topic.put()
-        self.handler.redirect('/')
-
