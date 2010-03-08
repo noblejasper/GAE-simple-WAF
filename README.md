@@ -8,5 +8,6 @@ simple python WAF for Google App Engine
 
 TODO:
 ---------------------------------------
+* コアとアプリを分離する
 * router.pyで独自routing出来るようにする
 * JapaneseMobile対応予定
