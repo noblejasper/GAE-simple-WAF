@@ -11,7 +11,7 @@ class index(CBase):
             auth_url          = self.users.create_login_url(self.request.uri)
             auth_url_linktext = 'Login'
 
-        template = self.tmpl( self, 'index.html' )
+        template = self.tmpl( self, 'root/index.html' )
         template.set(
             topics=topics,
             auth_url=auth_url,

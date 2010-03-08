@@ -1,5 +1,8 @@
-<html>
-  <body>
+{% extends "../base.html" %}
+
+{% block title %}TOP{% endblock %}
+
+{% block content %}
     <ul>
     {% for topic in topics %}
       <li><a href="/topic/view?id={{ topic.key }}">{{ topic.title|escape }}</a></li>
@@ -13,6 +16,4 @@
     </form>
 
     <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
-
-  </body>
-</html>
+{% endblock %}
