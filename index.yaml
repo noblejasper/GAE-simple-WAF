@@ -12,6 +12,7 @@ indexes:
 
 - kind: Comments
   properties:
+  - name: status
   - name: topic
   - name: created
     direction: desc

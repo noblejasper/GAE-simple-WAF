@@ -24,5 +24,5 @@ class Comments(db.Model):
     modified = db.DateTimeProperty(auto_now=True)
 
     def findall_by_topic(self, key):
-        q = db.GqlQuery("SELECT * FROM Comments WHERE topic = :1 ORDER BY created DESC", key)
+        q = db.GqlQuery("SELECT * FROM Comments WHERE topic = :1 AND status = :2 ORDER BY created DESC", key, 0)
         return q.fetch(10)
