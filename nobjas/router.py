@@ -20,8 +20,11 @@ class dispatcher():
     def dispatch(self,method):
         path       = self.handler.request.path
         route      = self.get_route(path)
-        controller = self.create_controller_instance(route)
-        self.dispatch_action(controller, method)
+        if route:
+            controller = self.create_controller_instance(route)
+            self.dispatch_action(controller, method)
+        else:
+            webapp.Response().set_status(404)
 
     def dispatch_action( self, controller=None, method="get" ):
         if controller:
@@ -29,9 +32,9 @@ class dispatcher():
             if action_method:
                 action_method()
             else:
-                webapp.Response.set_status(404)
+                webapp.Response().set_status(404)
         else:
-            webapp.Response.set_status(404)
+            webapp.Response().set_status(404)
 
     def get_route(self,path):
         route = {}
@@ -40,14 +43,21 @@ class dispatcher():
             route['action'] = 'index'
             return route
 
-        # TODO: make special routing
+        # special routing
+        special_route = {
+            '/copyright': ['root', 'index'],
+        }
+        if special_route.has_key(path):
+            route['controller'] = special_route[path].pop(0)
+            route['action']     = special_route[path].pop(0)
+            return route
 
         matches = re.search('^/(\w+)/(\w+)', path)
         if matches:
             route['controller'] = matches.group(1)
             route['action'] = matches.group(2)
         else:
-            raise Exception('tenuki desu')
+            return None
 
         return route
 
