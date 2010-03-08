@@ -53,9 +53,6 @@ class dispatcher():
 
     def create_controller_instance(self,route):
         controller = eval( route['controller'].capitalize() + '.' + route['action'] )
-        import logging
-        logging.getLogger().setLevel(logging.DEBUG)
-        logging.debug(controller)
         return controller(self.handler)
 
 class RequestHandler(webapp.RequestHandler):
