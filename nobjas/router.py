@@ -44,9 +44,11 @@ class dispatcher():
             return route
 
         # special routing
+        # WISH: read config yaml
         special_route = {
             '/copyright': ['root', 'index'],
         }
+
         if special_route.has_key(path):
             route['controller'] = special_route[path].pop(0)
             route['action']     = special_route[path].pop(0)
