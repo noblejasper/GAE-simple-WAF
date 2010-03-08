@@ -1,3 +1,0 @@
-* GAE-simple-WAF の基本的な使い方
-
-stub...
