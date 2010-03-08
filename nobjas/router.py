@@ -1,5 +1,6 @@
 import re
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp.util import login_required
 
 from nobjas.C import *
 
@@ -68,6 +69,8 @@ class dispatcher():
         return controller(self.handler)
 
 class RequestHandler(webapp.RequestHandler):
+
+    @login_required
     def get(self, *args):
         self._handle_request('get')
 
