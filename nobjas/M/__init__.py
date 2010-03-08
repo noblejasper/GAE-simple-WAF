@@ -12,6 +12,9 @@ class Topics(db.Model):
         q = db.GqlQuery("SELECT * FROM Topics WHERE status = :1 ORDER BY created DESC", 0)
         return q.fetch(10)
 
+    def find(self, key):
+        return db.get(key)
+
 class Comments(db.Model):
     topic    = db.ReferenceProperty(Topics)
     user     = db.UserProperty()
@@ -19,3 +22,7 @@ class Comments(db.Model):
     status   = db.IntegerProperty(default=0)
     created  = db.DateTimeProperty(auto_now_add=True)
     modified = db.DateTimeProperty(auto_now=True)
+
+    def findall_by_topic(self, key):
+        q = db.GqlQuery("SELECT * FROM Comments WHERE topic = :1 ORDER BY created DESC", key)
+        return q.fetch(10)

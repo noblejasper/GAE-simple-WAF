@@ -29,5 +29,5 @@ class guestbook(CBase):
         topic.title = self.request.get('title')
         topic.body  = self.request.get('body')
         topic.put()
-        self.redirect('/')
+        self.handler.redirect('/')
 

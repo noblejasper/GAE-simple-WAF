@@ -5,7 +5,7 @@ from google.appengine.ext import webapp
 from google.appengine.api import users
 
 # submodule list
-__all__=['Root',]
+__all__=['Root','Topic', 'Comment']
 
 class CBase():
     def __init__(self, handler):

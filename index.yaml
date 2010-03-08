@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Comments
+  properties:
+  - name: topic
+  - name: created
+    direction: desc
+
 - kind: Topics
   properties:
   - name: status

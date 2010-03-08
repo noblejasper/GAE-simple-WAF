@@ -1,12 +1,12 @@
 <html>
   <body>
+    <ul>
     {% for topic in topics %}
-      {% if topic.user %}<b>{{ topic.user.nickname }}</b> wrote:{% endif %}
-      <h2>{{ topic.title|escape }}</h2>
-      <p>{{ topic.body|escape }}</p>
+      <li><a href="/topic/view?id={{ topic.key }}">{{ topic.title|escape }}</a></li>
     {% endfor %}
+    </ul>
 
-    <form action="/sign" method="post">
+    <form action="/root/guestbook" method="post">
       <div><label>title<input name="title" /></label></div>
       <div><label>body<br /><textarea name="body" rows="3" cols="60"></textarea></label></div>
       <div><input type="submit" value="create Topic"></div>
