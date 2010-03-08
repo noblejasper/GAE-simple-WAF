@@ -7,8 +7,11 @@ from google.appengine.api import users
 # submodule list
 __all__=['Root',]
 
-class CBase(webapp.RequestHandler):
-    def __init__(self):
-        self.users = users
-        self.M     = M
-        self.tmpl  = tmpl
+class CBase():
+    def __init__(self, handler):
+        self.users    = users
+        self.M        = M
+        self.tmpl     = tmpl
+        self.handler  = handler
+        self.request  = handler.request
+        self.response = handler.response

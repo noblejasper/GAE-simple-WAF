@@ -8,5 +8,5 @@ simple python WAF for Google App Engine
 
 TODO:
 ---------------------------------------
-* config/router.pyが毎回設定しなくちゃいけなくてめんどくさい
+* router.pyで独自routing出来るようにする
 * JapaneseMobile対応予定

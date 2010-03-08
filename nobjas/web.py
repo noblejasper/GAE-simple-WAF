@@ -1,7 +1,7 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-from nobjas.config.router import router
+from nobjas.router import router
 
 class web():
     def __init__(self):

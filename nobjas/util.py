@@ -6,7 +6,7 @@ import logging
 class tmpl():
     def __init__( self, instance, filename ):
         self.filename        = filename
-        self.request_handler = instance
+        self.response        = instance.response
         self.values          = {}
         self.path            = 'templates/' + self.filename
 
@@ -20,6 +20,6 @@ class tmpl():
 
     def render(self):
         self.path = os.path.join(os.path.dirname(__file__), self.path)
-        self.request_handler.response.out.write(
+        self.response.out.write(
             template.render(self.path, self.values)
         )
