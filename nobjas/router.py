@@ -2,7 +2,7 @@ import re
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import login_required
 
-from nobjas.C import *
+from app.C import *
 
 class router():
     def __init__(self):
