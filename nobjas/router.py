@@ -3,6 +3,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import login_required
 
 import JPmobile
+from uamobile import detect
 from app.C import *
 
 class router():
