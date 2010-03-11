@@ -6,8 +6,12 @@ simple python WAF for Google App Engine
 
 まだWAFとして体をなしていないけど、MとCの分離は出来た。
 
+hosting
+---------------------------------------
+(http:://simplewaf.appspot.com/)で一応動かしてます。
+
+
 TODO:
 ---------------------------------------
 * ライブラリの名前を決めるw
-* コアとアプリを分離する
 * JapaneseMobile対応予定

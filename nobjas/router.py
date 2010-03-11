@@ -2,6 +2,7 @@ import re
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import login_required
 
+import JPmobile
 from app.C import *
 
 class router():
@@ -15,16 +16,21 @@ class router():
         )
 
 class dispatcher():
+    route = {}
+    handler = ''
+
     def __init__(self, handler):
-        self.handler = handler
+        self.handler             = handler
+        self.route['controller'] = 'root'
+        self.route['action']     = 'index'
 
     def dispatch(self,method):
-        path       = self.handler.request.path
-        route      = self.get_route(path)
-        if route:
-            controller = self.create_controller_instance(route)
+        if self.get_route():
+            self.check_device()
+            controller   = self.create_controller_instance()
             self.dispatch_action(controller, method)
         else:
+            # None Controller
             webapp.Response().set_status(404)
 
     def dispatch_action( self, controller=None, method="get" ):
@@ -33,16 +39,17 @@ class dispatcher():
             if action_method:
                 action_method()
             else:
+                # None method of Controller
                 webapp.Response().set_status(404)
         else:
+            # None Controller instance
             webapp.Response().set_status(404)
 
-    def get_route(self,path):
-        route = {}
+    def get_route(self):
+        path = self.handler.request.path
+
         if path == '/' :
-            route['controller'] = 'root'
-            route['action'] = 'index'
-            return route
+            return True
 
         # special routing
         # WISH: read config yaml
@@ -51,21 +58,26 @@ class dispatcher():
         }
 
         if special_route.has_key(path):
-            route['controller'] = special_route[path].pop(0)
-            route['action']     = special_route[path].pop(0)
-            return route
+            self.route['controller'] = special_route[path].pop(0)
+            self.route['action']     = special_route[path].pop(0)
+            return True
 
         matches = re.search('^/(\w+)/(\w+)', path)
         if matches:
-            route['controller'] = matches.group(1)
-            route['action'] = matches.group(2)
+            self.route['controller'] = matches.group(1)
+            self.route['action'] = matches.group(2)
+            return True
         else:
             return None
 
-        return route
+    def check_device(self):
+        self.is_mobile = JPmobile.is_mobile(self.handler.request.environ['HTTP_USER_AGENT'])
+        return True
 
-    def create_controller_instance(self,route):
-        controller = eval( route['controller'].capitalize() + '.' + route['action'] )
+    def create_controller_instance(self):
+        controller = eval(
+            self.route['controller'].capitalize() + '.' + self.route['action']
+        )
         return controller(self.handler)
 
 class RequestHandler(webapp.RequestHandler):
