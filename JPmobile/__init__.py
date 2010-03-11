@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 import re
-# from uamobile.nonmobile import NonMobileUserAgent as NonMobile
-# from JPmobile.context import Context
-
-# __version__ = '0.2.9'
-# __author__  = 'Chihiro Sakatoku <csakatoku@gmail.com>'
-
-# __all__ = ['detect_fast', 'detect', 'Context', 'NonMobile']
 
 DOCOMO_RE   = re.compile(r'^DoCoMo/\d\.\d[ /]')
 SOFTBANK_RE = re.compile(r'^(?:(?:SoftBank|Vodafone|J-PHONE)/\d\.\d|MOT-)')
@@ -35,25 +28,3 @@ def is_mobile(useragent):
         return True
     else:
         return None
-
-def detect(environ, context=None):
-    """
-    parse HTTP user agent string and detect a mobile device.
-    """
-    context = context or Context()
-    try:
-        ## if key 'HTTP_USER_AGENT' doesn't exist,
-        ## we are not able to decide agent class in the first place.
-        ## so raise KeyError to return NonMobile agent.
-        carrier = detect_fast(environ['HTTP_USER_AGENT'])
-
-        ## if carrier is 'nonmobile', raise KeyError intentionally
-        factory_class = {
-            'docomo'  : context.docomo_factory,
-            'ezweb'   : context.ezweb_factory,
-            'softbank': context.softbank_factory,
-            'willcom' : context.willcom_factory,
-            }[carrier]
-        return factory_class().create(environ, context)
-    except KeyError:
-        return NonMobile(environ, context)
