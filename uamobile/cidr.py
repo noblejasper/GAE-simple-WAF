@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from pkg_resources import resource_string
+#from pkg_resources import resource_string
 from IPy import IP
 
 from uamobile.cidrdata import crawler, docomo, ezweb, softbank, willcom

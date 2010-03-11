@@ -1,7 +1,9 @@
 import os
 from google.appengine.ext.webapp import template
 
-import logging
+# import logging
+# logging.getLogger().setLevel(logging.DEBUG)
+# logging.debug(message)
 
 class tmpl():
     def __init__( self, instance, filename ):
@@ -9,10 +11,6 @@ class tmpl():
         self.response        = instance.response
         self.values          = {}
         self.path            = 'templates/' + self.filename
-
-    # def test( self, **values ):
-    #     logging.getLogger().setLevel(logging.DEBUG)
-    #     logging.debug(values)
 
     def set( self, **values ):
         for k,v in values.items():

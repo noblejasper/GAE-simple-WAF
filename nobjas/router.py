@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 import re
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import login_required
 
-import JPmobile
 from uamobile import detect
 from app.C import *
 
@@ -16,18 +16,38 @@ class router():
             debug=True
         )
 
+class RequestHandler(webapp.RequestHandler):
+
+    @login_required
+    def get(self, *args):
+        self._handle_request('get')
+    def post(self, *args):
+        self._handle_request('post')
+    def head(self, *args):
+        self._handle_request('head')
+    def options(self, *args):
+        self._handle_request('options')
+    def put(self, *args):
+        self._handle_request('put')
+    def delete(self, *args):
+        self._handle_request('delete')
+    def trace(self, *args):
+        self._handle_request('trace')
+    def _handle_request(self, method):
+        """全てのメソッドは全てdispatchに一度なげる"""
+        dispatcher(self).dispatch(method)
+
 class dispatcher():
     route = {}
-    handler = ''
 
     def __init__(self, handler):
         self.handler             = handler
         self.route['controller'] = 'root'
         self.route['action']     = 'index'
+        self.device              = self.check_device()
 
     def dispatch(self,method):
         if self.get_route():
-            self.check_device()
             controller   = self.create_controller_instance()
             self.dispatch_action(controller, method)
         else:
@@ -71,39 +91,11 @@ class dispatcher():
         else:
             return None
 
-    def check_device(self):
-        self.is_mobile = JPmobile.is_mobile(self.handler.request.environ['HTTP_USER_AGENT'])
-        return True
-
     def create_controller_instance(self):
         controller = eval(
             self.route['controller'].capitalize() + '.' + self.route['action']
         )
         return controller(self.handler)
 
-class RequestHandler(webapp.RequestHandler):
-
-    @login_required
-    def get(self, *args):
-        self._handle_request('get')
-
-    def post(self, *args):
-        self._handle_request('post')
-
-    def head(self, *args):
-        self._handle_request('head')
-
-    def options(self, *args):
-        self._handle_request('options')
-
-    def put(self, *args):
-        self._handle_request('put')
-
-    def delete(self, *args):
-        self._handle_request('delete')
-
-    def trace(self, *args):
-        self._handle_request('trace')
-
-    def _handle_request(self, method):
-        dispatcher(self).dispatch(method)
+    def check_device(self):
+        return detect(self.handler.request.environ)
