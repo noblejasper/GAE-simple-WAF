@@ -6,11 +6,16 @@ from google.appengine.ext.webapp import template
 # logging.debug(message)
 
 class tmpl():
-    def __init__( self, instance, filename ):
+    def __init__( self, instance, filename=None ):
         self.filename        = filename
         self.response        = instance.response
         self.values          = {}
-        self.path            = 'templates/' + self.filename
+        self.path            = '../app/templates/' + self.filename
+
+    def filename( self, filename=None ):
+        if filename:
+            self.filename = filename
+        return self.filename
 
     def set( self, **values ):
         for k,v in values.items():
