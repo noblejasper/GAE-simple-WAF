@@ -4,6 +4,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import login_required
 
 from uamobile import detect
+from nobjas.C import Error
 from app.C import *
 
 class router():
@@ -49,22 +50,12 @@ class dispatcher():
     def dispatch(self,method):
         if self.get_route():
             controller   = self.create_controller_instance()
-            self.dispatch_action(controller, method)
+            if not self.dispatch_action(controller, method):
+                # None dispatch
+                self._404error()
         else:
             # None Controller
-            webapp.Response().set_status(404)
-
-    def dispatch_action( self, controller=None, method="get" ):
-        if controller:
-            action_method = getattr(controller, method, None)
-            if action_method:
-                action_method()
-            else:
-                # None method of Controller
-                webapp.Response().set_status(404)
-        else:
-            # None Controller instance
-            webapp.Response().set_status(404)
+            self._404error()
 
     def get_route(self):
         path = self.handler.request.path
@@ -92,10 +83,35 @@ class dispatcher():
             return None
 
     def create_controller_instance(self):
-        controller = eval(
-            self.route['controller'].capitalize() + '.' + self.route['action']
-        )
-        return controller(self.handler)
+        try:
+            controller = eval(
+                self.route['controller'].capitalize() + '.' + self.route['action']
+                )
+
+        except AttributeError:
+            return None
+
+        else:
+            return controller(self.handler)
+
+    def dispatch_action( self, controller=None, method="get" ):
+        if controller:
+            action_method = getattr(controller, method, None)
+            if action_method:
+                action_method()
+                return True
+            else:
+                # None method of Controller
+                return None
+        else:
+            # None Controller instance
+            return None
+
+    def _404error(self):
+        self.route['controller'] = 'error'
+        self.route['action']     = 'error404'
+        controller   = self.create_controller_instance()
+        self.dispatch_action(controller, 'get')
 
     def check_device(self):
         return detect(self.handler.request.environ)
