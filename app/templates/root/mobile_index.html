@@ -1,0 +1,19 @@
+{% extends "../mobile_base.html" %}
+
+{% block title %}TOP{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for topic in topics %}
+      <li><a href="/topic/view?id={{ topic.key }}">{{ topic.title|escape }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <form action="/topic/add" method="post">
+      <div>title<br /><input name="title" /></div>
+      <div>body<br /><textarea name="body" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="create Topic"></div>
+    </form>
+
+    <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
+{% endblock %}

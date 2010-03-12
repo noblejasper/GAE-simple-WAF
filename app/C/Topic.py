@@ -8,12 +8,12 @@ class view(CBase):
 
         comments = self.M.Comments().findall_by_topic(topic.key())
 
-        template = self.tmpl( self, 'topic/view.html' )
-        template.set(
+        self.tmpl.filename( 'topic/view.html' )
+        self.tmpl.set(
             topic=topic,
             comments=comments
         )
-        template.render()
+        self.tmpl.render()
 
 class add(CBase):
     def post(self):

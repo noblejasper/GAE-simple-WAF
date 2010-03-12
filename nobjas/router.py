@@ -18,7 +18,6 @@ class router():
         )
 
 class RequestHandler(webapp.RequestHandler):
-
     # @login_required
     def get(self, *args):
         self._handle_request('get')
@@ -92,10 +91,13 @@ class dispatcher():
             return None
 
         else:
-            return controller(self.handler)
+            return controller(self.handler, self.device)
 
     def dispatch_action( self, controller=None, method="get" ):
         if controller:
+            if not self.device.is_nonmobile():
+                method = 'mobile_' + method
+
             action_method = getattr(controller, method, None)
             if action_method:
                 action_method()

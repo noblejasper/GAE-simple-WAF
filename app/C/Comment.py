@@ -5,11 +5,11 @@ class add(CBase):
     def get(self):
         topic_key = self.request.get('id')
 
-        template = self.tmpl( self, 'comment/add.html' )
-        template.set(
+        self.tmpl.filename( 'comment/add.html' )
+        self.tmpl.set(
             topic_key=topic_key,
         )
-        template.render()
+        self.tmpl.render()
 
     def post(self):
         comment = self.M.Comments()
