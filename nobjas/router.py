@@ -19,7 +19,7 @@ class router():
 
 class RequestHandler(webapp.RequestHandler):
 
-    @login_required
+    # @login_required
     def get(self, *args):
         self._handle_request('get')
     def post(self, *args):
