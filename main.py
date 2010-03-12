@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from nobjas.web import web
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from nobjas.C import CBase
 
 class index(CBase):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from nobjas.C import CBase
 
 class error404(CBase):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from app import M
 from nobjas.util import tmpl
 
