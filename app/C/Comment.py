@@ -2,7 +2,9 @@
 from nobjas.C import CBase
 
 class add(CBase):
-    def get(self):
+    def        get(self): self._get()
+    def mobile_get(self): self._get()
+    def       _get(self):
         topic_key = self.request.get('id')
 
         self.tmpl.filename( 'comment/add.html' )
@@ -11,7 +13,9 @@ class add(CBase):
         )
         self.tmpl.render()
 
-    def post(self):
+    def        post(self): self._post()
+    def mobile_post(self): self._post()
+    def       _post(self):
         comment = self.M.Comments()
         key     = self.request.get('id')
 

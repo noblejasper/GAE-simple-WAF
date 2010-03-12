@@ -2,7 +2,9 @@
 from nobjas.C import CBase
 
 class view(CBase):
-    def get(self):
+    def        get(self): self._get()
+    def mobile_get(self): self._get()
+    def       _get(self):
         key = self.request.get('id')
         topic = self.M.Topics().find(key)
 
@@ -16,7 +18,9 @@ class view(CBase):
         self.tmpl.render()
 
 class add(CBase):
-    def post(self):
+    def        post(self): self._post()
+    def mobile_post(self): self._post()
+    def       _post(self):
         topic = self.M.Topics()
 
         if self.users.get_current_user():

@@ -1,0 +1,20 @@
+{% extends "../mobile_base.html" %}
+
+{% block title %}{{ topic.title|escape }}{% endblock %}
+
+{% block content %}
+<h1>{{ topic.title|escape }}</h1>
+<p>{{ topic.body|escape|linebreaksbr }}</p>
+<p>投稿者:{{ topic.user.nickname|escape }}</p>
+
+<p><a href="/comment/add?id={{ topic.key }}">コメントする</a></p>
+
+<ul>
+{% for comment in comments %}
+  <li>
+    {{ comment.created|date:"Y/m/d H:i"|escape }}: {{ comment.user.nickname|escape }}<br />
+    <p>{{ comment.body|escape|linebreaksbr }}</p>
+  </li>
+{% endfor %}
+</ul>
+{% endblock %}

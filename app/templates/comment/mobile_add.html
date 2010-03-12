@@ -1,0 +1,13 @@
+{% extends "../mobile_base.html" %}
+
+{% block title %}コメントする{% endblock %}
+
+{% block content %}
+<h1>コメントする</h1>
+
+<form method="post" action="/comment/add">
+  <input type="hidden" name="id" value="{{ topic_key }}" /><br />
+  <textarea name="body"></textarea>
+  <input type="submit" value="コメントする" />
+</form>
+{% endblock %}

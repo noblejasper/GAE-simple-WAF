@@ -2,11 +2,9 @@
 from nobjas.C import CBase
 
 class index(CBase):
-    def get(self):
-        self._get()
-    def mobile_get(self):
-        self._get()
-    def _get(self):
+    def        get(self): self._get()
+    def mobile_get(self): self._get()
+    def       _get(self):
         topics       = self.M.Topics().findall()
 
         if self.users.get_current_user():
