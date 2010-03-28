@@ -6,6 +6,7 @@ class index(CBase):
     def mobile_get(self): self._get()
     def       _get(self):
         topics       = self.M.Topics().findall()
+        categories   = self.M.Categories().findall()
 
         if self.users.get_current_user():
             auth_url          = self.users.create_logout_url(self.request.uri)
@@ -13,10 +14,10 @@ class index(CBase):
         else:
             auth_url          = self.users.create_login_url(self.request.uri)
             auth_url_linktext = 'Login'
-
         self.tmpl.filename( "root/index.html" )
         self.tmpl.set(
             topics=topics,
+            categories=categories,
             auth_url=auth_url,
             auth_url_linktext=auth_url_linktext
         )

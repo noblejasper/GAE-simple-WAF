@@ -3,6 +3,7 @@
 {% block title %}TOP{% endblock %}
 
 {% block content %}
+    <h3>TOPICS</h3>
     <ul>
     {% for topic in topics %}
       <li><a href="/topic/view?id={{ topic.key }}">{{ topic.title|escape }}</a></li>
@@ -13,6 +14,19 @@
       <div><label>title<input name="title" /></label></div>
       <div><label>body<br /><textarea name="body" rows="3" cols="60"></textarea></label></div>
       <div><input type="submit" value="create Topic"></div>
+    </form>
+
+    <h3>CATEGORIES</h3>
+    <ul>
+    {% for category in categories %}
+      <li><a href="/category/view?id={{ category.key }}">{{ category.title|escape }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <form action="/category/add" method="post">
+      <div><label>title<input name="title" /></label></div>
+      <div><label>body<br /><textarea name="description" rows="3" cols="60"></textarea></label></div>
+      <div><input type="submit" value="create Category"></div>
     </form>
 
     <a href="{{ auth_url }}">{{ auth_url_linktext }}</a>
