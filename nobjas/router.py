@@ -48,7 +48,7 @@ class dispatcher():
 
     def dispatch(self,method):
         if self.get_route():
-            controller   = self.create_controller_instance()
+            controller = self.create_controller_instance()
             if not self.dispatch_action(controller, method):
                 # None dispatch
                 self._404error()
@@ -112,7 +112,7 @@ class dispatcher():
     def _404error(self):
         self.route['controller'] = 'error'
         self.route['action']     = 'error404'
-        controller   = self.create_controller_instance()
+        controller = self.create_controller_instance()
         self.dispatch_action(controller, 'get')
 
     def check_device(self):
