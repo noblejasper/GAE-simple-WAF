@@ -1,16 +1,45 @@
 application: simplewaf
-version: 1
+derived_file_type:
+- python_precompiled
+version: develop
 runtime: python
 api_version: 1
 
 #default_expiration: "1h"
 
+admin_console:
+  pages:
+  - name: Appstats
+    url: /stats
+
 handlers:
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+  mime_type: image/x-icon
+
 - url: /css
-  static_dir: css
+  static_dir: statics/css
+
 - url: /js
-  static_dir: js
+  static_dir: statics/js
+
 - url: /img
-  static_dir: img
+  static_dir: statics/img
+
+- url: /robots.txt
+  static_files: statics/robots.txt
+  upload: statics/robots.txt
+
+- url: /build
+  static_dir: statics/build
+
+- url: /admin/.*
+  script: main.py
+  login: admin
+
+- url: /stats.*
+  script: $PYTHON_LIB/google/appengine/ext/appstats/ui.py
+
 - url: /.*
   script: main.py

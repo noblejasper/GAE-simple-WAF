@@ -2,10 +2,6 @@
 import os
 from google.appengine.ext.webapp import template
 
-# import logging
-# logging.getLogger().setLevel(logging.DEBUG)
-# logging.debug(message)
-
 class tmpl():
     def __init__( self, instance, filename='' ):
         self._filename = filename

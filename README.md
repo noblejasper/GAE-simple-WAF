@@ -8,7 +8,11 @@ simple python WAF for Google App Engine
 
 hosting
 ---------------------------------------
-(http:://simplewaf.appspot.com/)で一応動かしてます。
+(http:://nobjas-blog.appspot.com/)はこのWAFを基礎に動いています。
+
+そのうちBLOG自体のソースはここで公開します。
+
+M.pyの中身はBLOGのままです。
 
 
 TODO:

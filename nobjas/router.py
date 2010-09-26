@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+import sys
 import re
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import login_required
 
 from uamobile import detect
 from nobjas.C import Error
-from app.C import *
+from app import C
 
 class router():
     def __init__(self):
@@ -33,6 +34,7 @@ class RequestHandler(webapp.RequestHandler):
         self._handle_request('delete')
     def trace(self, *args):
         self._handle_request('trace')
+
     def _handle_request(self, method):
         """全てのメソッドは全てdispatchに一度なげる"""
         dispatcher(self).dispatch(method)
@@ -76,20 +78,21 @@ class dispatcher():
         matches = re.search('^/(\w+)/(\w+)', path)
         if matches:
             self.route['controller'] = matches.group(1)
-            self.route['action'] = matches.group(2)
+            self.route['action']     = matches.group(2)
             return True
         else:
             return None
 
     def create_controller_instance(self):
         try:
-            controller = eval(
-                self.route['controller'].capitalize() + '.' + self.route['action']
-                )
-
+            class_name = self.route['controller'].capitalize() + '.' + self.route['action']
+            target     = class_name.split('.')
+            (package, module, cls_name)  = (target[0], '.'.join(target[:-1]), target[-1])
+ 
+            # __import__したモジュールからcls_nameクラスを取得
+            controller = getattr(__import__(module, fromlist=[package]), cls_name)  
         except AttributeError:
-            return None
-
+            return False
         else:
             return controller(self.handler, self.device)
 
